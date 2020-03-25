@@ -7,10 +7,11 @@ def readExcel(filename, sheet_name, header_row = 1, columns = None, location = "
        Parameters:
             filename    : Name of the file, no termination.
             sheet_name  : Name of the sheet to read.
-            header_row  : Row where the header is, starting at 0.
+            header_row  : Row where the header is, starting at 0. Optional.
+                          As default 1.
             columns     : An array of strings, with the names of
-                          the headers you want to read.
-            location    : A string with the location of the file.
+                          the headers you want to read. Optional.
+            location    : A string with the location of the file. Optional.
                 Example : "./io/input/folders/to/your/file/"
                 
        Output: Dataframe 
@@ -40,7 +41,7 @@ def readJSON(filename, location = "./io/input/"):
     """Lets you read any json files and returns a python dict. 
        Parameters:
            filename    : Name of the file, no termination.
-           location    : Location of the file
+           location    : Location of the file. Optional.
                Example : "./io/input/folders/to/your/file/"
        
        Output: dict
@@ -60,10 +61,10 @@ def readCSV(filename, header = None, columns = None, location = "./io/input/"):
     """Lets you read any CSV file and returns a dataframe.
        Parameters:
            filename    : Name of the file, no termination.
-           header      : Row where the header is, starting at 0.
+           header      : Row where the header is, starting at 0. Optional.
            columns     : An array of strings, with the names of
-                         the headers you want to read.
-           location    : Location of the file
+                         the headers you want to read. Optional.
+           location    : Location of the file. Optional.
                Example : "./io/input/folders/to/your/file/"
        
        Output: Dataframe
