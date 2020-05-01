@@ -1,0 +1,30 @@
+{% set name = "deckutil" %}
+{% set version = "0.0.6" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+build:
+  number: 1
+  script: "python -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - pip
+    - python
+    - pandas >=0.25.1
+    - python-dateutil >=2.8.0
+    - folium >=0.10.1
+  run:
+    - python
+
+about:
+  home: https://github.com/juandeckard/deckUtil
+  license: MIT
+  license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
+  license_family: MIT
+  summary: A set of tools to make data analysis a bit less painful. Built in functions that include input/output managment, datetime transformations and scraping tools.
+  dev_url: https://github.com/juandeckard/deckUtil
+  doc_url: https://pypi.org/project/deckutil/
+  doc_source_url: https://github.com/juandeckard/deckUtil/blob/master/README.md

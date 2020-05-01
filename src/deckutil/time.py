@@ -1,3 +1,7 @@
+"""A module designed to work with datetime in a simplified manner."""
+
+__version__ = '0.1'
+
 from datetime import date, datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
@@ -8,39 +12,16 @@ def today(format = "%m/%d/%Y"):
            as default the same format as datetime. Optional.
                    As a default, it starts with a %m/%d/%Y format.
                    
-       Output: String
-    """
-    return date.today().strftime(format)
-
-def strToDate(date, format = "%m/%d/%Y"):
-    """Converts a String into a Date.
-       Parameters:
-           date: A date as a string.
-           format: The way you want to display the data,
-           as default the same format as datetime. Optional.
-                   As a default, it starts with a %m/%d/%Y format.
-                   
-       Output: Date
-    """
-    try:
-        return datetime.strptime(date, format)
-    except ValueError:
-        raise ValueError("Incorrect date format, should be", format)
-
-def dateToStr(date, format = "%m/%d/%Y"):
-    """Converts a Date into a String.
-       Parameters:
-           date: A date as a Date.
-           format: The way you want to display the data, 
-           as default the same format as datetime. Optional.
-                   As a default, it starts with a %m/%d/%Y format.
+       Example: The following example gets you todays date on non-retarded format.
+       
+                    today = today("%d,%m,%Y")
                    
        Output: String
     """
-    try:
-        return datetime.strftime(date, format)
-    except ValueError:
-        raise ValueError("Incorrect date format, should be", format)
+    if type(format) == str: # Check if type of format is str, return todays date.
+        return date.today().strftime(format)
+    else:                   # Raise error if format is not a str.
+        raise TypeError("Type of format needs to be str, not " + str(type(format)) + ".")
         
 def nextDay(day, format = "%m/%d/%Y"):
     """Returns next day by full nume.
@@ -51,17 +32,21 @@ def nextDay(day, format = "%m/%d/%Y"):
            as default the same format as datetime. Optional.
                    As a default, it starts with a %m/%d/%Y format.
        
+       Example: This will get next monday date.
+       
+                    tomorrow = tomorrow("monday")
+       
        Output: String
     """
     try:
-        date = datetime.now()
+        __date = datetime.now()                                   # Get todays date.
 
-        while(date.strftime("%A").lower() != str(day).lower()):
-            date += timedelta(1)
+        while(__date.strftime("%A").lower() != str(day).lower()): # Loop until day name match.
+            __date += timedelta(1)                                # Add a day.
 
-        return date.strftime(format)
-    except ValueError:
-        raise ValueError("Incorrect date format, should be", format)
+        return __date.strftime(format)
+    except ValueError:                                            # Raise error if format is incorrect.
+        raise ValueError("Incorrect date format " + format + ".")
 
 def prevDay(day, format = "%m/%d/%Y"):
     """Returns previous day by full nume.
@@ -72,17 +57,21 @@ def prevDay(day, format = "%m/%d/%Y"):
            as default the same format as datetime. Optional.
                     As a default, it starts with a %m/%d/%Y format.
        
+       Example: This will get next friday date.
+       
+                    yesterday = yesterday("Friday")
+       
        Output: String
     """
     try:
-        date = datetime.now()
+        __date = datetime.now()                                   # Get todays date.
 
-        while(date.strftime("%A").lower() != str(day).lower()):
-            date -= timedelta(1)
+        while(__date.strftime("%A").lower() != str(day).lower()): # Loop until day name match.
+            __date -= timedelta(1)                                # Subtract a day.
 
-        return date.strftime(format)
-    except ValueError:
-        raise ValueError("Incorrect date format, should be", format)
+        return __date.strftime(format)
+    except ValueError:                                            # Raise error if format is incorrect.
+        raise ValueError("Incorrect date format " + format + ".")
 
 def addTime(date, days = 0, weeks = 0, months = 0, years = 0, format = "%m/%d/%Y"):
     """Adds time period to a given date.
@@ -97,17 +86,21 @@ def addTime(date, days = 0, weeks = 0, months = 0, years = 0, format = "%m/%d/%Y
            as default the same format as datetime. Optional.
                     As a default, it starts with a %m/%d/%Y format.
        
+       Example: Lets add a few days, weeks, months and years.
+       
+                    newDate = addTime("01/01/2000",days = 4, weeks = 3, months = 10, years = 12)
+       
        Output: String
     """
     try:
-        date = (datetime.strptime(date, format) if type(date) == str else (date if type(date) == datetime else None))
+        date = (datetime.strptime(date, format) if type(date) == str else (date if type(date) == datetime else None)) # Normalize date input
         
         if date:
             return (date + timedelta(days=+days, weeks=+weeks) + relativedelta(months=+months, years=+years)).strftime("%m/%d/%Y")
-        else:
-            raise TypeError("Given date", date, "is not of type String or Date.")
-    except ValueError:
-        raise ValueError("Incorrect date format, should be", format)
+        else:                      # Raise error if date type is not str or Datetime.
+            raise TypeError("Given date " + date + " is not of type String or Date.")
+    except ValueError:             # Raise error if format is incorrect.
+        raise ValueError("Incorrect date format " + format + ".")
 
 def subTime(date, days = 0, weeks = 0, months = 0, years = 0, format = "%m/%d/%Y"):
     """Subtracts time period to a given date.
@@ -123,14 +116,18 @@ def subTime(date, days = 0, weeks = 0, months = 0, years = 0, format = "%m/%d/%Y
            as default the same format as datetime. Optional.
                     As a default, it starts with a %m/%d/%Y format.
        
+       Example: Lets subtract a few days, weeks, months and years.
+       
+                    newDate = subTime("01/01/2000",days = 4, weeks = 3, months = 10, years = 12)
+       
        Output: String
     """
     try:
-        date = (datetime.strptime(date, format) if type(date) == str else (date if type(date) == datetime else None))
+        date = (datetime.strptime(date, format) if type(date) == str else (date if type(date) == datetime else None)) # Normalize date input
         
         if date:
             return (date - timedelta(days=+days, weeks=+weeks) - relativedelta(months=+months, years=+years)).strftime("%m/%d/%Y")
-        else:
-            raise TypeError("Given date", date, "is not of type String or Date.")
-    except ValueError:
-        raise ValueError("Incorrect date format, should be", format)
+        else:                      # Raise error if date type is not str or Datetime.
+            raise TypeError("Given date " + date + " is not of type String or Date.")
+    except ValueError:             # Raise error if format is incorrect.
+        raise ValueError("Incorrect date format " + format + ".")
